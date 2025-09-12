@@ -1,0 +1,64 @@
+<div class="container my-4">
+  <div class="row">
+    <!-- Filtros -->
+    <div class="col-lg-3 mb-4">
+      <div class="card border-0 shadow-sm">
+        <div class="card-header bg-white">
+          <h5 class="mb-0">Filtros</h5>
+        </div>
+        <div class="card-body">
+          <h6 class="mb-3">Química</h6>
+          <div class="list-group mb-4">
+            <button 
+              *ngFor="let chemistry of chemistries" 
+              class="list-group-item list-group-item-action"
+              [class.active]="(chemistry === 'Todos' && !selectedChemistry) || chemistry === selectedChemistry"
+              (click)="onChemistryChange(chemistry)">
+              {{ chemistry }}
+            </button>
+          </div>
+          
+          <h6 class="mb-3">Formato</h6>
+          <div class="list-group mb-4">
+            <button 
+              *ngFor="let format of formats" 
+              class="list-group-item list-group-item-action"
+              [class.active]="(format === 'Todos' && !selectedFormat) || format === selectedFormat"
+              (click)="onFormatChange(format)">
+              {{ format }}
+            </button>
+          </div>
+          
+          <h6 class="mb-3">Aplicación</h6>
+          <div class="list-group">
+            <button 
+              *ngFor="let application of applications" 
+              class="list-group-item list-group-item-action"
+              [class.active]="(application === 'Todos' && !selectedApplication) || application === selectedApplication"
+              (click)="onApplicationChange(application)">
+              {{ application }}
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+    
+    <!-- Productos -->
+    <div class="col-lg-9">
+      <div class="d-flex justify-content-between align-items-center mb-4">
+        <h2>Productos</h2>
+        <div>
+          {{ filteredProducts.length }} productos encontrados
+        </div>
+      </div>
+      
+      <div *ngIf="filteredProducts.length === 0" class="text-center py-5">
+        <i class="bi bi-search fs-1 text-muted mb-3"></i>
+        <h4>No se encontraron productos</h4>
+        <p class="text-muted">Intenta con otros términos de búsqueda o filtros</p>
+      </div>
+      
+      <app-product-list [products]="filteredProducts"></app-product-list>
+    </div>
+  </div>
+</div>

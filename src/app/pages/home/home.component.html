@@ -1,0 +1,105 @@
+<div class="container my-4">
+  <!-- Carrusel de ofertas -->
+  <div class="row mb-5">
+    <div class="col-12">
+      <div class="carousel-container rounded shadow overflow-hidden">
+        <!-- Carousel items -->
+        <div class="carousel-inner">
+          <div *ngFor="let item of carouselItems; let i = index" 
+               class="carousel-item" 
+               [class.active]="item.active"
+               [ngClass]="item.class">
+            <div class="text-white p-5 text-center">
+              <h2 class="display-5">{{ item.title }}</h2>
+              <p class="lead">{{ item.description }}</p>
+              <a [routerLink]="item.link" class="btn btn-light btn-lg">{{ item.buttonText }}</a>
+            </div>
+          </div>
+        </div>
+        
+        <!-- Carousel controls -->
+        <button class="carousel-control-prev" (click)="prevSlide()">
+          <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+          <span class="visually-hidden">Anterior</span>
+        </button>
+        <button class="carousel-control-next" (click)="nextSlide()">
+          <span class="carousel-control-next-icon" aria-hidden="true"></span>
+          <span class="visually-hidden">Siguiente</span>
+        </button>
+        
+        <!-- Carousel indicators -->
+        <div class="carousel-indicators">
+          <button *ngFor="let item of carouselItems; let i = index" 
+                  [class.active]="item.active"
+                  (click)="selectSlide(i)"></button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Categorías -->
+  <div class="row mb-5">
+    <div class="col-12">
+      <h2 class="mb-4">Categorías Populares</h2>
+      <div class="row g-3">
+        <div class="col-md-3 col-6 mb-3" *ngFor="let category of categories">
+          <div class="card h-100 border-0 shadow-sm hover-effect">
+            <div class="card-body text-center p-4">
+              <div class="category-icon mb-3">
+                <i class="bi bi-{{ category.icon }} fs-1 text-primary"></i>
+              </div>
+              <h5 class="card-title mb-3">{{ category.name }}</h5>
+              <a [routerLink]="['/products']" [queryParams]="category.query" 
+                 class="btn btn-outline-primary btn-sm">
+                Ver productos <i class="bi bi-arrow-right ms-1"></i>
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+<!-- Productos destacados -->
+<div class="row">
+  <div class="col-12">
+    <h2 class="mb-4">Productos Destacados</h2>
+    <div class="row">
+      <div class="col-lg-3 col-md-6 mb-4" *ngFor="let product of featuredProducts">
+        <a [routerLink]="['/product', product.id]" class="text-decoration-none text-dark">
+          <div class="card h-100 border-0 shadow-sm product-card">
+            <div class="position-relative">
+              <img [src]="product.image || 'assets/images/placeholder.jpg'" 
+                   class="card-img-top" 
+                   [alt]="product.name"
+                   style="height: 200px; object-fit: cover;">
+              <div *ngIf="product.discount" class="position-absolute top-0 end-0 bg-danger text-white px-2 py-1 m-2 rounded">
+                -{{ product.discount }}%
+              </div>
+            </div>
+            <div class="card-body d-flex flex-column">
+              <h5 class="card-title">{{ product.name }}</h5>
+              <p class="card-text flex-grow-1 text-truncate-2">{{ product.description }}</p>
+              <div class="mt-auto">
+                <div class="d-flex justify-content-between align-items-center mb-2">
+                  <span class="h5 mb-0" *ngIf="!product.discount">${{ product.price }}</span>
+                  <div *ngIf="product.discount">
+                    <span class="h5 mb-0 text-danger">${{ product.price * (1 - product.discount/100) | number:'1.2-2' }}</span>
+                    <div class="small text-muted text-decoration-line-through">${{ product.price }}</div>
+                  </div>
+                </div>
+                <button (click)="$event.preventDefault(); $event.stopPropagation(); addToCart($event, product)" 
+                        class="btn btn-primary w-100">
+                  <i class="bi bi-cart-plus"></i> Agregar al carrito
+                </button>
+              </div>
+            </div>
+          </div>
+        </a>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+</div>

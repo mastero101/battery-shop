@@ -1,0 +1,99 @@
+<div class="container my-4">
+  <h2 class="mb-4">Carrito de Compras</h2>
+  
+  <div *ngIf="cart.items.length === 0" class="text-center py-5">
+    <i class="bi bi-cart-x fs-1 text-muted mb-3"></i>
+    <h4>Tu carrito está vacío</h4>
+    <p class="text-muted">Agrega algunos productos para continuar</p>
+    <a routerLink="/products" class="btn btn-primary">Ver productos</a>
+  </div>
+  
+  <div *ngIf="cart.items.length > 0">
+    <div class="row">
+      <div class="col-lg-8">
+        <div class="card border-0 shadow-sm mb-4">
+          <div class="card-header bg-white d-flex justify-content-between align-items-center">
+            <h5 class="mb-0">Productos en el carrito</h5>
+            <button (click)="clearCart()" class="btn btn-sm btn-outline-danger">
+              <i class="bi bi-trash"></i> Vaciar carrito
+            </button>
+          </div>
+          <div class="card-body p-0">
+            <table class="table table-borderless mb-0">
+              <thead class="border-bottom">
+                <tr>
+                  <th>Producto</th>
+                  <th>Precio</th>
+                  <th>Cantidad</th>
+                  <th>Total</th>
+                  <th></th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr *ngFor="let item of cart.items" class="border-bottom">
+                  <td>
+                    <div class="d-flex align-items-center">
+                      <img [src]="item.product.image || 'assets/images/placeholder.jpg'" 
+                           class="me-3" 
+                           alt="{{ item.product.name }}"
+                           style="width: 80px; height: 80px; object-fit: cover;">
+                      <div>
+                        <h6 class="mb-1">{{ item.product.name }}</h6>
+                        <small class="text-muted">{{ item.product.category }}</small>
+                      </div>
+                    </div>
+                  </td>
+                  <td>
+                    <div *ngIf="!item.product.discount">${{ item.product.price }}</div>
+                    <div *ngIf="item.product.discount">
+                      <div class="text-danger">${{ getProductPrice(item.product) | number:'1.2-2' }}</div>
+                      <div class="small text-muted text-decoration-line-through">${{ item.product.price }}</div>
+                    </div>
+                  </td>
+                  <td>
+                    <div class="d-flex align-items-center">
+                      <button (click)="decreaseQuantity(item)" class="btn btn-sm btn-outline-secondary">-</button>
+                      <span class="mx-2">{{ item.quantity }}</span>
+                      <button (click)="increaseQuantity(item)" class="btn btn-sm btn-outline-secondary">+</button>
+                    </div>
+                  </td>
+                  <td>${{ getItemTotal(item) | number:'1.2-2' }}</td>
+                  <td>
+                    <button (click)="removeFromCart(item.product.id)" class="btn btn-sm btn-outline-danger">
+                      <i class="bi bi-trash"></i>
+                    </button>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+      
+      <div class="col-lg-4">
+        <div class="card border-0 shadow-sm">
+          <div class="card-header bg-white">
+            <h5 class="mb-0">Resumen del pedido</h5>
+          </div>
+          <div class="card-body">
+            <div class="d-flex justify-content-between mb-2">
+              <span>Subtotal</span>
+              <span>${{ cart.total | number:'1.2-2' }}</span>
+            </div>
+            <div class="d-flex justify-content-between mb-2">
+              <span>Envío</span>
+              <span class="text-success">Gratis</span>
+            </div>
+            <div class="d-flex justify-content-between mb-3">
+              <span><strong>Total</strong></span>
+              <span class="fs-5"><strong>${{ cart.total | number:'1.2-2' }}</strong></span>
+            </div>
+            <button class="btn btn-success w-100 btn-lg">
+              <i class="bi bi-credit-card"></i> Proceder al pago
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

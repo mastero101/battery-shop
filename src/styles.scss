@@ -1,1 +1,5 @@
-/* You can add global styles to this file, and also import other style files */
+// Use the modern @use syntax for Bootstrap (must be first)
+@use 'bootstrap/scss/bootstrap';
+
+// Import Bootstrap Icons
+@import 'bootstrap-icons/font/bootstrap-icons.css';

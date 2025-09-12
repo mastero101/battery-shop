@@ -1,0 +1,48 @@
+<header class="bg-primary text-white shadow-sm">
+  <div class="container py-2">
+    <div class="row align-items-center">
+      <div class="col-md-3 mb-2 mb-md-0">
+        <a routerLink="/" class="d-flex align-items-center text-white text-decoration-none">
+          <div class="logo-container me-2">
+            <svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="logo-icon">
+              <rect x="2" y="7" width="16" height="12" rx="1" ry="1" fill="#ffffff"/>
+              <line x1="6" y1="7" x2="6" y2="7.01" stroke="#0d6efd"/>
+              <line x1="10" y1="7" x2="10" y2="7.01" stroke="#0d6efd"/>
+              <line x1="22" y1="11" x2="22" y2="13" stroke="#dc3545"/>
+              <line x1="22" y1="15" x2="22" y2="17" stroke="#198754"/>
+              <path d="M6 10v4" stroke="#0d6efd" stroke-width="3"/>
+            </svg>
+          </div>
+          <div>
+            <h1 class="h4 mb-0 fw-bold">PowerCell</h1>
+            <p class="small mb-0 text-white-50">Energía Inteligente</p>
+          </div>
+        </a>
+      </div>
+      
+      <div class="col-md-6 mb-3 mb-md-0">
+        <form (ngSubmit)="onSearch()" class="d-flex">
+          <input 
+            type="text" 
+            class="form-control me-2" 
+            placeholder="Buscar productos..." 
+            [(ngModel)]="searchQuery"
+            name="searchQuery">
+          <button class="btn btn-light" type="submit">
+            <i class="bi bi-search"></i>
+          </button>
+        </form>
+      </div>
+      
+      <div class="col-md-3 text-end">
+        <a routerLink="/cart" class="text-white position-relative">
+          <i class="bi bi-cart fs-4"></i>
+          <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger"
+            *ngIf="getTotalItems() > 0">
+            {{ getTotalItems() }}
+          </span>
+        </a>
+      </div>
+    </div>
+  </div>
+</header>

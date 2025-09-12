@@ -1,0 +1,35 @@
+.cursor-pointer {
+  cursor: pointer;
+}
+
+.breadcrumb {
+  background-color: #f8f9fa;
+  padding: 0.75rem 1rem;
+  border-radius: 0.375rem;
+}
+
+.card {
+  transition: transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
+}
+
+.card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.15) !important;
+}
+
+.img-thumbnail {
+  cursor: pointer;
+  transition: border-color 0.2s ease-in-out;
+}
+
+.img-thumbnail:hover {
+  border-color: #0d6efd;
+}
+
+.list-group-item {
+  padding: 0.75rem 1rem;
+}
+
+.badge {
+  font-size: 0.75em;
+}
