@@ -28,6 +28,11 @@ export const routes: Routes = [
     data: { scrollToTop: true }
   },
   { 
+    path: 'checkout', 
+    loadComponent: () => import('./pages/checkout/checkout.component').then(m => m.CheckoutComponent),
+    data: { scrollToTop: true, title: 'Finalizar compra' }
+  },
+  { 
     path: 'account', 
     canActivate: [authGuard],
     loadChildren: () => import('./pages/user-profile/user-profile.module').then(m => m.UserProfileModule),

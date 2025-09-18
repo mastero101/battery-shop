@@ -97,8 +97,10 @@
           <a routerLink="/cart" class="text-white position-relative">
             <i class="bi bi-cart fs-4"></i>
             <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger"
-              *ngIf="getTotalItems() > 0">
-              {{ getTotalItems() }}
+              *ngIf="cartItemCount > 0"
+              style="font-size: 0.6rem;">
+              {{ cartItemCount }}
+              <span class="visually-hidden">items in cart</span>
             </span>
           </a>
         </div>

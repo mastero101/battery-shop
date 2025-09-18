@@ -17,10 +17,12 @@ import { Subscription } from 'rxjs';
 })
 export class HeaderComponent implements OnInit, OnDestroy {
   cart: Cart = { items: [], total: 0 };
+  cartItemCount: number = 0;
   searchQuery: string = '';
   user: User | null = null;
   isMenuOpen = false;
   private authSub: Subscription | null = null;
+  private cartSub: Subscription | null = null;
 
   constructor(
     private cartService: CartService,
@@ -29,20 +31,22 @@ export class HeaderComponent implements OnInit, OnDestroy {
   ) { }
 
   ngOnInit(): void {
-    this.cartService.cart$.subscribe(cart => {
+    // Subscribe to cart changes
+    this.cartSub = this.cartService.cart$.subscribe(cart => {
       this.cart = cart;
+      this.cartItemCount = cart.items.reduce((total, item) => total + item.quantity, 0);
     });
 
-    // Subscribe to user authentication state
+    // Existing auth subscription
+    this.user = this.authService.currentUserValue;
     this.authSub = this.authService.currentUser$.subscribe(user => {
       this.user = user;
     });
   }
 
   ngOnDestroy(): void {
-    if (this.authSub) {
-      this.authSub.unsubscribe();
-    }
+    this.authSub?.unsubscribe();
+    this.cartSub?.unsubscribe();
   }
 
   toggleMenu(): void {

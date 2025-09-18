@@ -96,6 +96,7 @@ export class ProductService {
     {
       id: 5,
       name: 'Batería Samsung 30Q 18650',
+      brand: 'Samsung',
       description: 'Batería Samsung INR18650-30Q 3000mAh 18650 para vapes, linternas y dispositivos de alta demanda',
       price: 8.5,
       category: 'Baterías 18650',
@@ -115,6 +116,7 @@ export class ProductService {
     {
       id: 6,
       name: 'Batería Samsung 35E 18650',
+      brand: 'Samsung',
       description: 'Batería Samsung INR18650-35E 3500mAh 18650 para bicicletas eléctricas y herramientas',
       price: 9.2,
       category: 'Baterías 18650',
@@ -135,6 +137,7 @@ export class ProductService {
     {
       id: 7,
       name: 'Batería Samsung 26F 18650',
+      brand: 'Samsung',
       description: 'Batería Samsung INR18650-26F 2600mAh 18650 para cámaras y dispositivos de alta corriente',
       price: 7.8,
       category: 'Baterías 18650',
@@ -156,6 +159,7 @@ export class ProductService {
     {
       id: 8,
       name: 'Batería LG HG2 18650',
+      brand: 'LG',
       description: 'Batería LG HG2 3000mAh 18650 para bicicletas eléctricas y dispositivos de alta potencia',
       price: 8.2,
       category: 'Baterías 18650',
@@ -177,6 +181,7 @@ export class ProductService {
     {
       id: 9,
       name: 'Batería Liitokala 35E 18650',
+      brand: 'Liitokala',
       description: 'Batería Liitokala 3500mAh 18650 para vapes y dispositivos electrónicos',
       price: 6.5,
       category: 'Baterías 18650',
@@ -198,6 +203,7 @@ export class ProductService {
     {
       id: 10,
       name: 'Batería LiFePO4 18650 DLG Power 2000mAh',
+      brand: 'DLG',
       description: 'Batería DLG LiFePO4 18650 2000mAh para seguridad y dispositivos de bajo consumo',
       price: 12.5,
       category: 'Baterías LiFePO4',
@@ -220,6 +226,7 @@ export class ProductService {
     {
       id: 11,
       name: 'Batería Liitokala 26650 5000mAh',
+      brand: 'Liitokala',
       description: 'Batería Liitokala 26650 5000mAh para linternas y herramientas de alta demanda',
       price: 15.8,
       category: 'Baterías 26650',
@@ -239,6 +246,7 @@ export class ProductService {
     {
       id: 12,
       name: 'Batería Liitokala 26650 7000mAh',
+      brand: 'Liitokala',
       description: 'Batería Liitokala 26650 7000mAh para dispositivos de alta capacidad',
       price: 19.5,
       category: 'Baterías 26650',
@@ -261,6 +269,7 @@ export class ProductService {
     {
       id: 13,
       name: 'Batería Ión de Sodio HAKADI 18650 1500mAh',
+      brand: 'HAKADI',
       description: 'Batería de ion de sodio 1500mAh tecnología emergente y ecológica sin el uso de litio ni metales raros',
       price: 22.5,
       category: 'Baterías de Sodio',
@@ -282,6 +291,7 @@ export class ProductService {
     {
       id: 14,
       name: 'Batería Ión de Sodio Varicore 32700 5000mAh',
+      brand: 'Varicore',
       description: 'Batería de iones de sodio de alta capacidad 5000mAh, solución ecológica y segura para almacenamiento de energía',
       price: 22.5,
       category: 'Baterías de Sodio',
@@ -305,6 +315,7 @@ export class ProductService {
     {
       id: 15,
       name: 'TDT BMS 8S 24V 60A Protección Batería LiFePO4',
+      brand: 'TDT',
       description: 'Módulo de protección BMS 8S 24V 60A para baterías LiFePO4, con balanceo de celdas, protección contra sobrecarga, sobredescarga, cortocircuito y temperatura',
       price: 50.99,
       category: 'BMS',
@@ -336,6 +347,7 @@ export class ProductService {
     {
       id: 16,
       name: 'Daly BMS 8S 24V 100A Batería LiFePO4 con Bluetooth',
+      brand: 'Daly',
       description: 'Sistema de Gestión de Batería (BMS) 8S 24V 100A para baterías LiFePO4 con monitoreo en tiempo real vía Bluetooth. Incluye protección contra sobrecarga, sobredescarga, cortocircuito y temperatura',
       price: 89.99,
       category: 'BMS',
