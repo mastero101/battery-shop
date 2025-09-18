@@ -1,5 +1,38 @@
-// Use the modern @use syntax for Bootstrap (must be first)
-@use 'bootstrap/scss/bootstrap';
+// Import Bootstrap
+@import '../node_modules/bootstrap/dist/css/bootstrap.min.css';
+@import '../node_modules/bootstrap-icons/font/bootstrap-icons.css';
 
-// Import Bootstrap Icons
-@import 'bootstrap-icons/font/bootstrap-icons.css';
+// Custom styles
+body {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+main {
+  flex: 1;
+}
+
+// Fix for Bootstrap Icons in buttons
+.btn .bi {
+  vertical-align: -0.125em;
+}
+
+// Custom scrollbar
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: #f1f1f1;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #888;
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #555;
+}

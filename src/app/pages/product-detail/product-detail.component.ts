@@ -3,6 +3,7 @@ import { CommonModule } from '@angular/common';
 import { ActivatedRoute, RouterModule } from '@angular/router';
 import { ProductService } from '../../services/product.service';
 import { CartService } from '../../services/cart.service';
+import { FavoritesService } from '../../services/favorites.service';
 import { Product } from '../../models/product.model';
 
 @Component({
@@ -16,11 +17,14 @@ export class ProductDetailComponent implements OnInit {
   product: Product | undefined;
   relatedProducts: Product[] = [];
   selectedImage: string = '';
+  quantity: number = 1;
+  maxQuantity: number = 10; // Maximum allowed quantity
 
   constructor(
     private route: ActivatedRoute,
     private productService: ProductService,
-    private cartService: CartService
+    private cartService: CartService,
+    private favoritesService: FavoritesService
   ) { }
 
   ngOnInit(): void {
@@ -42,6 +46,7 @@ export class ProductDetailComponent implements OnInit {
   loadProduct(id: number): void {
     this.productService.getProductById(id).subscribe(product => {
       if (product) {
+        product.isFavorite = this.favoritesService.isFavorite(product.id);
         this.product = product;
         this.selectedImage = product.image;
         this.loadRelatedProducts(product);
@@ -64,10 +69,36 @@ export class ProductDetailComponent implements OnInit {
   addToCart(event: Event, product: Product): void {
     event.preventDefault();
     event.stopPropagation();
-    this.cartService.addToCart(product);
+    this.cartService.addToCart(product, this.quantity);
+    this.quantity = 1; // Reset quantity after adding to cart
     
     // Optional: Show a success message or notification
     // You can implement a toast service or use a library like ngx-toastr
+  }
+
+  incrementQuantity(): void {
+    if (this.quantity < this.maxQuantity) {
+      this.quantity++;
+    }
+  }
+
+  decrementQuantity(): void {
+    if (this.quantity > 1) {
+      this.quantity--;
+    }
+  }
+
+  updateQuantity(event: Event): void {
+    const input = event.target as HTMLInputElement;
+    let value = parseInt(input.value, 10);
+    
+    if (isNaN(value) || value < 1) {
+      value = 1;
+    } else if (value > this.maxQuantity) {
+      value = this.maxQuantity;
+    }
+    
+    this.quantity = value;
   }
 
   getProductPrice(): number {
@@ -89,5 +120,18 @@ export class ProductDetailComponent implements OnInit {
 
   selectImage(image: string): void {
     this.selectedImage = image;
+  }
+
+  toggleFavorite(product: Product, event: Event): void {
+    event.preventDefault();
+    event.stopPropagation();
+    
+    if (product) {
+      this.favoritesService.toggleFavorite(product.id);
+      // Update the local product's favorite status
+      if (this.product) {
+        this.product.isFavorite = this.favoritesService.isFavorite(this.product.id);
+      }
+    }
   }
 }

@@ -1,0 +1,66 @@
+// 1. Include functions first (so you can manipulate colors, SVGs, calc, etc)
+@use "sass:math";
+@use "sass:map";
+@use "sass:color";
+@use "sass:meta";
+@use "sass:string";
+
+// 2. Include Bootstrap configuration
+@use "bootstrap/scss/functions" as *;
+
+// 3. Include any default variable overrides here
+$primary: #0d6efd;
+$secondary: #6c757d;
+$success: #198754;
+$info: #0dcaf0;
+$warning: #ffc107;
+$danger: #dc3545;
+$light: #f8f9fa;
+$dark: #212529;
+
+// 5. Include remainder of required Bootstrap stylesheets
+@use "bootstrap/scss/variables" as *;
+@use "bootstrap/scss/variables-dark" as *;
+@use "bootstrap/scss/maps" as *;
+@use "bootstrap/scss/mixins" as *;
+@use "bootstrap/scss/utilities" as *;
+@use "bootstrap/scss/root" as *;
+@use "bootstrap/scss/reboot" as *;
+@use "bootstrap/scss/type" as *;
+@use "bootstrap/scss/images" as *;
+@use "bootstrap/scss/containers" as *;
+@use "bootstrap/scss/grid" as *;
+@use "bootstrap/scss/buttons" as *;
+@use "bootstrap/scss/transitions" as *;
+@use "bootstrap/scss/dropdown" as *;
+@use "bootstrap/scss/button-group" as *;
+@use "bootstrap/scss/nav" as *;
+@use "bootstrap/scss/navbar" as *;
+@use "bootstrap/scss/card" as *;
+@use "bootstrap/scss/forms" as *;
+@use "bootstrap/scss/alert" as *;
+@use "bootstrap/scss/badge" as *;
+@use "bootstrap/scss/utilities/api" as *;
+
+// 5. Add additional custom code here
+body {
+  padding-top: 3.5rem;
+}
+
+// Custom styles for the application
+.btn-outline-primary {
+  &:hover {
+    color: white;
+  }
+}
+
+// Fix for form floating labels
+.form-floating > .form-control:not(:placeholder-shown) ~ label::after {
+  background-color: transparent;
+  border-radius: var(--bs-border-radius);
+}
+
+// Fix for button groups
+.btn-group > .btn:not(:first-child) {
+  margin-left: -1px;
+}

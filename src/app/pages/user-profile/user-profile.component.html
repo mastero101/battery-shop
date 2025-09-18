@@ -1,0 +1,187 @@
+<div class="container my-4">
+  <div *ngIf="!user" class="text-center py-5">
+    <h2>Inicia sesión para ver tu perfil</h2>
+    <a routerLink="/login" class="btn btn-primary btn-lg mt-3">Iniciar sesión</a>
+  </div>
+
+  <div *ngIf="user" class="card shadow-sm">
+    <!-- Nav tabs -->
+    <ul class="nav nav-tabs" id="profileTabs" role="tablist">
+      <li class="nav-item" role="presentation">
+        <button class="nav-link" [class.active]="activeTab === 'profile'" (click)="activeTab = 'profile'" type="button">
+          <i class="bi bi-person me-2"></i>Perfil
+        </button>
+      </li>
+      <li class="nav-item" role="presentation">
+        <button class="nav-link" [class.active]="activeTab === 'orders'" (click)="activeTab = 'orders'" type="button">
+          <i class="bi bi-box-seam me-2"></i>Mis Pedidos
+        </button>
+      </li>
+      <li class="nav-item" role="presentation">
+        <button class="nav-link" [class.active]="activeTab === 'favorites'" (click)="activeTab = 'favorites'" type="button">
+          <i class="bi bi-heart me-2"></i>Favoritos
+        </button>
+      </li>
+    </ul>
+
+    <!-- Tab panes -->
+    <div class="card-body p-4">
+      <!-- Profile Tab -->
+      <div *ngIf="activeTab === 'profile'" class="tab-pane fade show active">
+        <div class="row">
+          <div class="col-md-4 text-center mb-4">
+            <div class="mb-3">
+              <div class="bg-light rounded-circle d-flex align-items-center justify-content-center mx-auto" style="width: 120px; height: 120px;">
+                <i class="bi bi-person-circle" style="font-size: 5rem; color: #6c757d;"></i>
+              </div>
+              <h4 class="mt-3">{{ user.firstName }} {{ user.lastName }}</h4>
+              <p class="text-muted">{{ user.email }}</p>
+              <button class="btn btn-outline-primary btn-sm">Cambiar foto</button>
+            </div>
+          </div>
+          <div class="col-md-8">
+            <h5 class="mb-4">Información personal</h5>
+            <div class="row mb-3">
+              <div class="col-md-6 mb-3">
+                <label class="form-label text-muted">Nombre</label>
+                <p class="form-control bg-light">{{ user.firstName }}</p>
+              </div>
+              <div class="col-md-6 mb-3">
+                <label class="form-label text-muted">Apellido</label>
+                <p class="form-control bg-light">{{ user.lastName }}</p>
+              </div>
+            </div>
+            <div class="mb-3">
+              <label class="form-label text-muted">Correo electrónico</label>
+              <p class="form-control bg-light">{{ user.email }}</p>
+            </div>
+            <div class="mb-3">
+              <label class="form-label text-muted">Teléfono</label>
+              <p class="form-control bg-light">{{ user.phone || 'No especificado' }}</p>
+            </div>
+            
+            <h5 class="mt-5 mb-4">Dirección de envío</h5>
+            <div *ngIf="user.address; else noAddress">
+              <p>{{ user.address.street }}</p>
+              <p>{{ user.address.city }}, {{ user.address.state }} {{ user.address.zipCode }}</p>
+              <p>{{ user.address.country }}</p>
+              <button class="btn btn-outline-primary mt-2">Editar dirección</button>
+            </div>
+            <ng-template #noAddress>
+              <p class="text-muted">No hay dirección guardada</p>
+              <button class="btn btn-outline-primary">Agregar dirección</button>
+            </ng-template>
+            
+            <div class="mt-5">
+              <button (click)="logout()" class="btn btn-outline-danger">
+                <i class="bi bi-box-arrow-right me-2"></i>Cerrar sesión
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Orders Tab -->
+      <div *ngIf="activeTab === 'orders'" class="tab-pane fade show active">
+        <h4 class="mb-4">Mis Pedidos</h4>
+        
+        <div *ngIf="isLoading" class="text-center py-5">
+          <div class="spinner-border text-primary" role="status">
+            <span class="visually-hidden">Cargando...</span>
+          </div>
+          <p class="mt-2">Cargando pedidos...</p>
+        </div>
+        
+        <div *ngIf="!isLoading && orders.length === 0" class="text-center py-5">
+          <i class="bi bi-box-seam" style="font-size: 3rem; color: #dee2e6;"></i>
+          <h5 class="mt-3">No hay pedidos</h5>
+          <p class="text-muted">Aún no has realizado ningún pedido.</p>
+          <a routerLink="/products" class="btn btn-primary">Ver productos</a>
+        </div>
+        
+        <div *ngIf="!isLoading && orders.length > 0">
+          <div *ngFor="let order of orders" class="card mb-3">
+            <div class="card-header d-flex justify-content-between align-items-center">
+              <div>
+                <span class="fw-bold me-3">Pedido #{{ order.id }}</span>
+                <span class="badge" [ngClass]="getOrderStatusClass(order.status)">
+                  {{ order.status | titlecase }}
+                </span>
+              </div>
+              <small class="text-muted">{{ order.createdAt | date:'mediumDate' }}</small>
+            </div>
+            <div class="card-body">
+              <div *ngFor="let item of order.items" class="d-flex mb-3">
+                <img [src]="item.product.image" [alt]="item.product.name" style="width: 80px; height: 80px; object-fit: cover;" class="me-3">
+                <div class="flex-grow-1">
+                  <h6 class="mb-1">{{ item.product.name }}</h6>
+                  <p class="mb-1 text-muted">Cantidad: {{ item.quantity }}</p>
+                  <p class="mb-0">${{ item.price * item.quantity | number:'1.2-2' }}</p>
+                </div>
+              </div>
+              <div class="d-flex justify-content-between align-items-center mt-3 pt-3 border-top">
+                <strong>Total: ${{ order.total | number:'1.2-2' }}</strong>
+                <button class="btn btn-outline-secondary btn-sm">Ver detalles</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Favorites Tab -->
+      <div *ngIf="activeTab === 'favorites'" class="tab-pane fade show active">
+        <div class="d-flex justify-content-between align-items-center mb-4">
+          <h4 class="mb-0">Mis Favoritos</h4>
+          <span class="badge bg-primary">{{ favoriteProducts.length }} productos</span>
+        </div>
+        
+        <div *ngIf="favoriteProducts.length === 0" class="text-center py-5">
+          <i class="bi bi-heart" style="font-size: 3rem; color: #dee2e6;"></i>
+          <h5 class="mt-3">No hay productos favoritos</h5>
+          <p class="text-muted">Agrega productos a tus favoritos para verlos aquí.</p>
+          <a routerLink="/products" class="btn btn-primary">Explorar productos</a>
+        </div>
+        
+        <div *ngIf="favoriteProducts.length > 0" class="row">
+          <div *ngFor="let product of favoriteProducts" class="col-md-6 col-lg-4 mb-4">
+            <div class="card h-100">
+              <div class="position-relative">
+                <img [src]="product.image" class="card-img-top" [alt]="product.name" style="height: 200px; object-fit: contain; padding: 1rem;">
+                <button (click)="removeFromFavorites(product.id)" class="btn btn-sm btn-outline-danger position-absolute top-0 end-0 m-2">
+                  <i class="bi bi-heart-fill"></i>
+                </button>
+                <div *ngIf="product.discount" class="position-absolute top-0 start-0 bg-danger text-white px-2 py-1 m-2 rounded">
+                  -{{ product.discount }}%
+                </div>
+              </div>
+              <div class="card-body d-flex flex-column">
+                <h5 class="card-title">{{ product.name }}</h5>
+                <p class="card-text text-truncate-2">{{ product.description }}</p>
+                <div class="mt-auto">
+                  <div class="d-flex justify-content-between align-items-center">
+                    <span class="h5 mb-0">
+                      <span *ngIf="product.discount" class="text-danger">
+                        ${{ (product.price * (1 - product.discount/100)) | number:'1.2-2' }}
+                      </span>
+                      <span *ngIf="!product.discount">
+                        ${{ product.price | number:'1.2-2' }}
+                      </span>
+                      <span *ngIf="product.discount" class="text-decoration-line-through text-muted ms-2 small">
+                        ${{ product.price | number:'1.2-2' }}
+                      </span>
+                    </span>
+                  </div>
+                  <div class="d-grid gap-2 mt-3">
+                    <button class="btn btn-outline-primary btn-sm">
+                      <i class="bi bi-cart-plus me-1"></i> Añadir al carrito
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

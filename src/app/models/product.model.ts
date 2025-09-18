@@ -26,5 +26,6 @@ export interface Product {
     overCurrent?: string;
     shortCircuit?: string;
     temperature?: string;
-  };  
+  };
+  isFavorite?: boolean; // Indica si el producto está en favoritos
 }

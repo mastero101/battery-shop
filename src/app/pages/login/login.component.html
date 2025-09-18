@@ -1,0 +1,109 @@
+<div class="container py-5">
+  <div class="row justify-content-center">
+    <div class="col-md-8 col-lg-6">
+      <div class="card shadow-sm">
+        <div class="card-body p-4">
+          <div class="text-center mb-4">
+            <h2 class="h3 mb-3">Iniciar sesión</h2>
+            <p class="text-muted">Ingresa tus credenciales para acceder a tu cuenta</p>
+          </div>
+
+          <!-- Error Alert -->
+          <div *ngIf="error" class="alert alert-danger" role="alert">
+            <i class="bi bi-exclamation-triangle-fill me-2"></i>
+            {{ error }}
+          </div>
+
+          <!-- Login Form -->
+          <form [formGroup]="loginForm" (ngSubmit)="onSubmit()" novalidate>
+            <!-- Email -->
+            <div class="mb-3">
+              <label for="email" class="form-label">Correo electrónico</label>
+              <input 
+                type="email" 
+                class="form-control" 
+                id="email" 
+                formControlName="email"
+                [class.is-invalid]="loginForm.controls['email'].touched && loginForm.controls['email'].invalid"
+                placeholder="tucorreo@ejemplo.com"
+              >
+              <div *ngIf="loginForm.controls['email'].touched && loginForm.controls['email'].invalid" class="invalid-feedback">
+                <div *ngIf="loginForm.controls['email'].errors?.['required']">El correo es requerido</div>
+                <div *ngIf="loginForm.controls['email'].errors?.['email']">Ingresa un correo válido</div>
+              </div>
+            </div>
+
+            <!-- Password -->
+            <div class="mb-4">
+              <div class="d-flex justify-content-between align-items-center">
+                <label for="password" class="form-label">Contraseña</label>
+                <a routerLink="/forgot-password" class="small text-decoration-none">¿Olvidaste tu contraseña?</a>
+              </div>
+              <div class="input-group">
+                <input 
+                  [type]="showPassword ? 'text' : 'password'" 
+                  class="form-control" 
+                  id="password" 
+                  formControlName="password"
+ [class.is-invalid]="loginForm.controls['password'].touched && loginForm.controls['password'].invalid"
+                  placeholder="•••••••"
+                >
+                <button 
+                  class="btn btn-outline-secondary" 
+                  type="button" 
+                  (click)="showPassword = !showPassword"
+                  [attr.aria-label]="showPassword ? 'Ocultar contraseña' : 'Mostrar contraseña'"
+                >
+                  <i class="bi" [class.bi-eye]="!showPassword" [class.bi-eye-slash]="showPassword"></i>
+                </button>
+              </div>
+              <div *ngIf="loginForm.controls['password'].touched && loginForm.controls['password'].invalid" class="invalid-feedback d-block">
+                <div *ngIf="loginForm.controls['password'].errors?.['required']">La contraseña es requerida</div>
+                <div *ngIf="loginForm.controls['password'].errors?.['minlength']">La contraseña debe tener al menos 6 caracteres</div>
+              </div>
+            </div>
+
+            <!-- Remember Me -->
+            <div class="form-check mb-4">
+              <input class="form-check-input" type="checkbox" id="remember" formControlName="remember">
+              <label class="form-check-label" for="remember">
+                Recordar sesión
+              </label>
+            </div>
+
+            <!-- Submit Button -->
+            <button 
+              type="submit" 
+              class="btn btn-primary w-100 py-2 mb-3"
+              [disabled]="loginForm.invalid || isLoading"
+            >
+              <span *ngIf="isLoading" class="spinner-border spinner-border-sm me-2" role="status" aria-hidden="true"></span>
+              {{ isLoading ? 'Iniciando sesión...' : 'Iniciar sesión' }}
+            </button>
+
+            <!-- Social Login -->
+            <div class="text-center mb-3">
+              <span class="text-muted">O inicia sesión con</span>
+            </div>
+            <div class="d-grid gap-2">
+              <button type="button" class="btn btn-outline-primary">
+                <i class="bi bi-google me-2"></i> Google
+              </button>
+              <button type="button" class="btn btn-outline-dark">
+                <i class="bi bi-github me-2"></i> GitHub
+              </button>
+            </div>
+          </form>
+        </div>
+        
+        <!-- Register Link -->
+        <div class="card-footer text-center py-3">
+          <p class="mb-0">
+            ¿No tienes una cuenta? 
+            <a routerLink="/register" class="text-primary text-decoration-none fw-medium">Regístrate</a>
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

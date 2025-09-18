@@ -4,16 +4,15 @@ import { FormsModule } from '@angular/forms';
 import { ActivatedRoute, RouterModule } from '@angular/router';
 import { Product } from '../../models/product.model';
 import { ProductService } from '../../services/product.service';
-import { ProductListComponent } from '../../components/product-list/product-list.component';
 
 @Component({
-  selector: 'app-product-list-page',
+  selector: 'app-product-list',
   standalone: true,
-  imports: [CommonModule, FormsModule, RouterModule, ProductListComponent],
+  imports: [CommonModule, FormsModule, RouterModule,],
   templateUrl: './product-list.component.html',
   styleUrls: ['./product-list.component.scss']
 })
-export class ProductListPageComponent implements OnInit {
+export class ProductListComponent implements OnInit {
   products: Product[] = [];
   filteredProducts: Product[] = [];
   searchQuery: string = '';
@@ -97,5 +96,10 @@ export class ProductListPageComponent implements OnInit {
   onApplicationChange(application: string): void {
     this.selectedApplication = application === 'Todos' ? '' : application;
     this.filterProducts();
+  }
+
+  addToCart(product: Product): void {
+    // This will be implemented when we set up the cart functionality
+    console.log('Adding to cart:', product);
   }
 }
