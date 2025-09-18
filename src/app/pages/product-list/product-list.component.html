@@ -90,7 +90,7 @@
                     <div class="small text-muted text-decoration-line-through">${{ product.price | number:'1.2-2' }}</div>
                   </div>
                 </div>
-                <button (click)="addToCart(product); $event.stopPropagation()" class="btn btn-primary w-100">
+                <button (click)="$event.stopPropagation(); addToCart(product, $event)" class="btn btn-primary w-100">
                   <i class="bi bi-cart-plus"></i> Agregar al carrito
                 </button>
               </div>

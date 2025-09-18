@@ -66,7 +66,7 @@
     <h2 class="mb-4">Productos Destacados</h2>
     <div class="row">
       <div class="col-lg-3 col-md-6 mb-4" *ngFor="let product of featuredProducts">
-        <a [routerLink]="['/product', product.id]" class="text-decoration-none text-dark">
+        <a [routerLink]="['/products', product.id]" class="text-decoration-none text-dark">
           <div class="card h-100 border-0 shadow-sm product-card">
             <div class="position-relative">
               <img [src]="product.image || 'assets/images/placeholder.jpg'" 

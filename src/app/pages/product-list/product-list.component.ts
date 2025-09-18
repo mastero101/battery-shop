@@ -1,14 +1,15 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { FormsModule } from '@angular/forms';
-import { ActivatedRoute, RouterModule } from '@angular/router';
-import { Product } from '../../models/product.model';
+import { Router, ActivatedRoute, RouterModule } from '@angular/router';
 import { ProductService } from '../../services/product.service';
+import { CartService } from '../../services/cart.service';
+import { Product } from '../../models/product.model';
+// Remove ToastrService import as we'll use a simple alert for now
 
 @Component({
   selector: 'app-product-list',
   standalone: true,
-  imports: [CommonModule, FormsModule, RouterModule,],
+  imports: [CommonModule, RouterModule],
   templateUrl: './product-list.component.html',
   styleUrls: ['./product-list.component.scss']
 })
@@ -26,7 +27,9 @@ export class ProductListComponent implements OnInit {
 
   constructor(
     private productService: ProductService,
-    private route: ActivatedRoute
+    private cartService: CartService,
+    private route: ActivatedRoute,
+    private router: Router
   ) { }
 
   ngOnInit(): void {
@@ -98,8 +101,8 @@ export class ProductListComponent implements OnInit {
     this.filterProducts();
   }
 
-  addToCart(product: Product): void {
-    // This will be implemented when we set up the cart functionality
-    console.log('Adding to cart:', product);
+  addToCart(product: Product, event: Event): void {
+    event.stopPropagation();
+    this.cartService.addToCart(product);
   }
 }

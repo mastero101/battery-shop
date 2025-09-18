@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { RouterModule } from '@angular/router';
+import { RouterModule, ActivatedRoute } from '@angular/router';
 import { AuthService } from '../../services/auth.service';
 import { OrderService } from '../../services/order.service';
 import { FavoritesService } from '../../services/favorites.service';
@@ -30,11 +30,20 @@ export class UserProfileComponent implements OnInit {
     private authService: AuthService,
     private orderService: OrderService,
     private favoritesService: FavoritesService,
-    private productService: ProductService
+    private productService: ProductService,
+    private route: ActivatedRoute
   ) {}
 
   ngOnInit(): void {
     this.user = this.authService.currentUserValue;
+    
+    // Subscribe to route params to handle tab changes
+    this.route.firstChild?.params.subscribe(params => {
+      const tab = this.route.firstChild?.snapshot.data['tab'];
+      if (tab) {
+        this.activeTab = tab;
+      }
+    });
     
     if (this.user) {
       this.loadUserData();
